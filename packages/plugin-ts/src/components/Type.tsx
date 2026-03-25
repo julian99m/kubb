@@ -18,6 +18,7 @@ type Props = {
   arrayType: PluginTs['resolvedOptions']['arrayType']
   enumType: PluginTs['resolvedOptions']['enumType']
   enumKeyCasing: PluginTs['resolvedOptions']['enumKeyCasing']
+  enumTypeSuffix: PluginTs['resolvedOptions']['enumTypeSuffix']
   mapper: PluginTs['resolvedOptions']['mapper']
   syntaxType: PluginTs['resolvedOptions']['syntaxType']
   description?: string
@@ -35,6 +36,7 @@ export function Type({
   syntaxType,
   enumType,
   enumKeyCasing,
+  enumTypeSuffix,
   mapper,
   description,
 }: Props): FabricReactNode {
@@ -56,6 +58,7 @@ export function Type({
             optionalType,
             arrayType,
             enumType,
+            enumTypeSuffix,
             mapper,
           },
         ),
@@ -70,7 +73,7 @@ export function Type({
 
     if (isDirectEnum || isEnumOnly) {
       const enumSchema = enumSchemas[0]!
-      const typeNameWithKey = `${enumSchema.args.typeName}Key`
+      const typeNameWithKey = `${enumSchema.args.typeName}${enumTypeSuffix}`
 
       type = factory.createTypeReferenceNode(typeNameWithKey)
 
@@ -137,7 +140,7 @@ export function Type({
 
   const enums = [...new Set(enumSchemas)].map((enumSchema) => {
     const name = enumType === 'asPascalConst' ? pascalCase(enumSchema.args.name) : camelCase(enumSchema.args.name)
-    const typeName = ['asConst', 'asPascalConst'].includes(enumType) ? `${enumSchema.args.typeName}Key` : enumSchema.args.typeName
+    const typeName = ['asConst', 'asPascalConst'].includes(enumType) ? `${enumSchema.args.typeName}${enumTypeSuffix}` : enumSchema.args.typeName
 
     const [nameNode, typeNode] = factory.createEnumDeclaration({
       name,

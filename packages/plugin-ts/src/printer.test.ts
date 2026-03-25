@@ -27,6 +27,7 @@ describe('printerTs', () => {
     optionalType: 'questionToken',
     arrayType: 'array',
     enumType: 'inlineLiteral',
+    enumTypeSuffix: 'Key'
   })
 
   describe('scalar types', () => {
@@ -169,42 +170,42 @@ describe('printerTs', () => {
     })
 
     it('enum without name still renders inline literal even when enumType is not inlineLiteral', async () => {
-      const p = printerTs({ optionalType: 'questionToken', arrayType: 'array', enumType: 'enum' })
+      const p = printerTs({ optionalType: 'questionToken', arrayType: 'array', enumType: 'enum', enumTypeSuffix: 'Key' })
       const result = p.print(createSchema({ type: 'enum', enumValues: ['a', 'b'] }))
 
       expect(await formatTS(result)).toMatchInlineSnapshot(`"'a' | 'b'"`)
     })
 
     it('enum with name and enumType=enum renders reference', async () => {
-      const p = printerTs({ optionalType: 'questionToken', arrayType: 'array', enumType: 'enum' })
+      const p = printerTs({ optionalType: 'questionToken', arrayType: 'array', enumType: 'enum', enumTypeSuffix: 'Key' })
       const result = p.print(createSchema({ type: 'enum', name: 'Status', enumValues: ['active', 'inactive'] }))
 
       expect(await formatTS(result)).toBe('Status')
     })
 
     it('enum with name and enumType=asConst renders reference with Key suffix', async () => {
-      const p = printerTs({ optionalType: 'questionToken', arrayType: 'array', enumType: 'asConst' })
+      const p = printerTs({ optionalType: 'questionToken', arrayType: 'array', enumType: 'asConst', enumTypeSuffix: 'Key' })
       const result = p.print(createSchema({ type: 'enum', name: 'Status', enumValues: ['active', 'inactive'] }))
 
       expect(await formatTS(result)).toBe('StatusKey')
     })
 
     it('enum with name and enumType=asPascalConst renders reference with Key suffix', async () => {
-      const p = printerTs({ optionalType: 'questionToken', arrayType: 'array', enumType: 'asPascalConst' })
+      const p = printerTs({ optionalType: 'questionToken', arrayType: 'array', enumType: 'asPascalConst', enumTypeSuffix: 'Key' })
       const result = p.print(createSchema({ type: 'enum', name: 'Status', enumValues: ['active', 'inactive'] }))
 
       expect(await formatTS(result)).toBe('StatusKey')
     })
 
     it('enum with name and enumType=literal renders reference', async () => {
-      const p = printerTs({ optionalType: 'questionToken', arrayType: 'array', enumType: 'literal' })
+      const p = printerTs({ optionalType: 'questionToken', arrayType: 'array', enumType: 'literal', enumTypeSuffix: 'Key' })
       const result = p.print(createSchema({ type: 'enum', name: 'Status', enumValues: ['active', 'inactive'] }))
 
       expect(await formatTS(result)).toBe('Status')
     })
 
     it('enum with name and enumType=constEnum renders reference without Key suffix', async () => {
-      const p = printerTs({ optionalType: 'questionToken', arrayType: 'array', enumType: 'constEnum' })
+      const p = printerTs({ optionalType: 'questionToken', arrayType: 'array', enumType: 'constEnum', enumTypeSuffix: 'Key' })
       const result = p.print(createSchema({ type: 'enum', name: 'Status', enumValues: ['active', 'inactive'] }))
 
       expect(await formatTS(result)).toBe('Status')
@@ -299,7 +300,7 @@ describe('printerTs', () => {
     })
 
     it('arrayType=generic renders Array<T>', async () => {
-      const p = printerTs({ optionalType: 'questionToken', arrayType: 'generic', enumType: 'inlineLiteral' })
+      const p = printerTs({ optionalType: 'questionToken', arrayType: 'generic', enumType: 'inlineLiteral', enumTypeSuffix: 'Key' })
       const result = p.print(
         createSchema({
           type: 'array',
@@ -426,7 +427,7 @@ describe('printerTs', () => {
     })
 
     it('optional property with optionalType=undefined adds | undefined', async () => {
-      const p = printerTs({ optionalType: 'undefined', arrayType: 'array', enumType: 'inlineLiteral' })
+      const p = printerTs({ optionalType: 'undefined', arrayType: 'array', enumType: 'inlineLiteral', enumTypeSuffix: 'Key' })
       const result = p.print(
         createSchema({
           type: 'object',
@@ -442,7 +443,7 @@ describe('printerTs', () => {
     })
 
     it('optional property with optionalType=questionTokenAndUndefined adds both', async () => {
-      const p = printerTs({ optionalType: 'questionTokenAndUndefined', arrayType: 'array', enumType: 'inlineLiteral' })
+      const p = printerTs({ optionalType: 'questionTokenAndUndefined', arrayType: 'array', enumType: 'inlineLiteral', enumTypeSuffix: 'Key' })
       const result = p.print(
         createSchema({
           type: 'object',
@@ -584,7 +585,7 @@ describe('printerTs', () => {
     })
 
     it('nullish property with optionalType=undefined adds | undefined', async () => {
-      const p = printerTs({ optionalType: 'undefined', arrayType: 'array', enumType: 'inlineLiteral' })
+      const p = printerTs({ optionalType: 'undefined', arrayType: 'array', enumType: 'inlineLiteral', enumTypeSuffix: 'Key' })
       const result = p.print(
         createSchema({
           type: 'object',

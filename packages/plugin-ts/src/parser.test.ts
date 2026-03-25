@@ -6,7 +6,7 @@ describe('type parse', () => {
   test.each(schemas.basic)('$name', ({ name, schema }) => {
     const text = parserType.parse(
       { name, schema: {}, parent: undefined, current: schema, siblings: [schema] },
-      { optionalType: 'questionToken', arrayType: 'array', enumType: 'asConst' },
+      { optionalType: 'questionToken', arrayType: 'array', enumType: 'asConst', enumTypeSuffix: 'Key' },
     )
     expect(text).toMatchSnapshot()
   })
@@ -34,7 +34,7 @@ describe('type parse', () => {
     }
     const result = parserType.parse(
       { name: 'test', schema: {}, parent: undefined, current: schema, siblings: [schema] },
-      { optionalType: 'questionToken', arrayType: 'array', enumType: 'asConst' },
+      { optionalType: 'questionToken', arrayType: 'array', enumType: 'asConst', enumTypeSuffix: 'Key' },
     )
 
     // Should generate: Array<TestArrayEnumKey>
@@ -52,7 +52,7 @@ describe('type parse', () => {
     }
     const result = parserType.parse(
       { name: 'test', schema: {}, parent: undefined, current: schema, siblings: [schema] },
-      { optionalType: 'questionToken', arrayType: 'array', enumType: 'asConst' },
+      { optionalType: 'questionToken', arrayType: 'array', enumType: 'asConst', enumTypeSuffix: 'Key' },
     )
 
     // Should generate: (unknown | null)
@@ -70,7 +70,7 @@ describe('type parse', () => {
       }
       const result = parserType.parse(
         { name: 'test', schema: {}, parent: undefined, current: schema, siblings: [schema] },
-        { optionalType: 'questionToken', arrayType: 'array', enumType: 'asConst' },
+        { optionalType: 'questionToken', arrayType: 'array', enumType: 'asConst', enumTypeSuffix: 'Key' },
       )
 
       expect(result).toBeTruthy()
@@ -86,7 +86,7 @@ describe('type parse', () => {
       }
       const result = parserType.parse(
         { name: 'test', schema: {}, parent: undefined, current: schema, siblings: [schema] },
-        { optionalType: 'questionToken', arrayType: 'generic', enumType: 'asConst' },
+        { optionalType: 'questionToken', arrayType: 'generic', enumType: 'asConst', enumTypeSuffix: 'Key' },
       )
 
       expect(result).toBeTruthy()

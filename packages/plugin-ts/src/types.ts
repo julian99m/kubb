@@ -54,6 +54,13 @@ export type Options = {
    */
   enumKeyCasing?: 'screamingSnakeCase' | 'snakeCase' | 'pascalCase' | 'camelCase' | 'none'
   /**
+   * Optional suffix for enum key type names when `enumType` is 'asConst', 'asPascalConst'.
+   * Can be useful to explicitly differentiate the key type from the value type, especially when they are identical after casing (e.g., `PetStatus`).
+   * Or, in contrast, can be useful to unify the key and value type names by setting `enumTypeSuffix` to an empty string.
+   * @default 'Key'
+   */
+  enumTypeSuffix?: string
+  /**
    * Switch between type or interface for creating TypeScript types.
    * - 'type' generates type alias declarations.
    * - 'interface' generates interface declarations.
@@ -152,6 +159,7 @@ type ResolvedOptions = {
   enumType: NonNullable<Options['enumType']>
   enumKeyCasing: NonNullable<Options['enumKeyCasing']>
   enumSuffix: NonNullable<Options['enumSuffix']>
+  enumTypeSuffix: NonNullable<Options['enumTypeSuffix']>
   dateType: NonNullable<Options['dateType']>
   integerType: NonNullable<Options['integerType']>
   unknownType: NonNullable<Options['unknownType']>

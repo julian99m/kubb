@@ -159,6 +159,7 @@ type ParserOptions = {
    * @note In Kubb v5, `inlineLiteral` becomes the default.
    */
   enumType: 'enum' | 'asConst' | 'asPascalConst' | 'constEnum' | 'literal' | 'inlineLiteral'
+  enumTypeSuffix: string
   mapper?: Record<string, ts.PropertySignature>
 }
 
@@ -216,7 +217,7 @@ export const parse = createParser<ts.Node | null, ParserOptions>({
       }
 
       // Adding suffix to enum (see https://github.com/kubb-labs/kubb/issues/1873)
-      return typeKeywordMapper.enum(['asConst', 'asPascalConst'].includes(options.enumType) ? `${current.args.typeName}Key` : current.args.typeName)
+      return typeKeywordMapper.enum(['asConst', 'asPascalConst'].includes(options.enumType) ? `${current.args.typeName}${options.enumTypeSuffix}` : current.args.typeName)
     },
     ref(tree, _options) {
       const { current } = tree
